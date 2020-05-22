@@ -4,7 +4,7 @@
     <div class="whole">
       <div class="side-bar">
         <LeftSidebar></LeftSidebar>
-      </div>
+      </div>
       <div class="router-part">
         <router-view />
       </div>

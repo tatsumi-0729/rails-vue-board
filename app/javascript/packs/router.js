@@ -6,13 +6,13 @@ import Reference from './pages/reference.vue'
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', name: 'Top', component: Top },
-  { path: '/reference', name: 'Reference', component: Reference }
-]
+  { path: "/", name: "Top", component: Top },
+  { path: "/reference", name: "Reference", component: Reference },
+];
 
 const router = new VueRouter({
   mode: "history",
-  routes: routes
-})
+  routes: routes,
+});
 
-export default router
+export default router;

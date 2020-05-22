@@ -5,8 +5,8 @@
         <div class="space-between">
           <img src="https://placehold.jp/160x80.png" alt="画像" />
           <div class="caption">
-            <h3 class="article-title">{{article.title}}</h3>
-            <p class="article-content">{{article.content}}</p>
+            <h3 class="article-title">{{ article.title }}</h3>
+            <p class="article-content">{{ article.content }}</p>
             <a class="btn btn-default btn-xs" id="reference_button">
               <router-link to="/reference">詳細</router-link>
             </a>
@@ -22,30 +22,34 @@ import Vue from "vue/dist/vue.esm";
 import axios from "axios";
 
 export default {
-  // props: {
-  //   msg: "記事詳細"
-  // },
-  name: "top",
   data: function() {
     return {
-      articleInfo: {},
-      articles: []
+      articles: [],
+      id: document.getElementById("id").value
+      // document.getElementById("id").getAttribute("id")
+      // document.getElementById("id")
+      // document.querySelector('#id')
     };
-  },
-  mounted: function() {
-    this.fetchArticles();
   },
   methods: {
     fetchArticles() {
       axios.get(`/api/board`).then(res => {
-        for (var i = 0; i < res.data.article.length; i++) {
-          this.articles.push(res.data.article[i]);
+        for (var i = 0; i < res.data.length; i++) {
+          this.articles.push(res.data[i]);
         }
       });
-      axios.get(`/api/board/${id}.json`).then(res => {
-        console.log = res.data;
-        this.articleInfo = res.data;
-      });
+    }
+  },
+  onclick: function() {
+    this.fetchReferenceArticleId();
+  },
+  methods: {
+    fetchReferenceArticleId() {
+      axios
+        .post(`/api/board/show`, { id: this.referenceArticleId })
+        .then(res => {
+          console.log = res.data;
+        });
     }
   }
 };
@@ -81,5 +85,10 @@ export default {
   margin: 0px 0px 30px 25px;
   position: relative;
   bottom: 30px;
+}
+
+.deleteButton {
+  display: flex;
+  flex-direction: row-reverse;
 }
 </style>

@@ -5,4 +5,9 @@ class Api::BoardController < ApplicationController
     render json: @Articles
   end
 
+  def show
+    @Article = Article.where(id: params[1])
+    render "index", json: @Article
+  end
+
 end

@@ -4,16 +4,26 @@
       <div class="thumbnail">
         <div class="space-between">
           <img src="https://placehold.jp/160x80.png" alt="画像" />
+          <!-- <p class="article-title">{{ article.image}}</p> -->
           <div class="caption">
+            <!-- valueに注意 -->
+            <input type="hidden" id="articleId" :value="article.id" />
             <h3 class="article-title">{{ article.title }}</h3>
             <p class="article-content">{{ article.content }}</p>
-            <a class="btn btn-default btn-xs" id="reference_button">
-              <router-link to="/reference">詳細</router-link>
-            </a>
+            <div class="button_whole">
+              <button class="btn btn-default btn-xs" id="reference_button">
+                <router-link
+                  class="routerLink"
+                  :to="{ name: 'Reference', params: { id: article.id } }"
+                >詳細</router-link>
+              </button>
+              <button class="deleteButton" v-on:click="deleteButton">削除</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <router-link class="routerLink" :to="{ name: 'Login'}">login</router-link>
   </div>
 </template>
 
@@ -25,37 +35,39 @@ export default {
   data: function() {
     return {
       articles: [],
-      id: document.getElementById("id").value
-      // document.getElementById("id").getAttribute("id")
-      // document.getElementById("id")
-      // document.querySelector('#id')
+      articleId: []
     };
   },
   methods: {
     fetchArticles() {
-      axios.get(`/api/board`).then(res => {
+      axios.get(`/api/v1/board`).then(res => {
         for (var i = 0; i < res.data.length; i++) {
           this.articles.push(res.data[i]);
         }
       });
+    },
+    deleteButton: function() {
+      // articleIdはここで入れないとscriptの性質上、undifinedになる。
+      this.articleId = document.getElementById("articleId").value;
+      console.log(this.articleId);
+      axios.delete(`/api/v1/board/${this.articleId}`).then(res => {
+        this.articles = [];
+        this.fetchArticles();
+        console.log("削除完了");
+      });
     }
   },
-  onclick: function() {
-    this.fetchReferenceArticleId();
-  },
-  methods: {
-    fetchReferenceArticleId() {
-      axios
-        .post(`/api/board/show`, { id: this.referenceArticleId })
-        .then(res => {
-          console.log = res.data;
-        });
-    }
+  mounted: function() {
+    this.fetchArticles();
   }
 };
 </script>
 
 <style scoped lang="scss">
+.routerLink {
+  text-decoration: none;
+}
+
 .body {
   font-size: 50%;
   font-family: Verdana, "ＭＳ Ｐゴシック", sans-serif;
@@ -87,8 +99,8 @@ export default {
   bottom: 30px;
 }
 
-.deleteButton {
+.button_whole {
   display: flex;
-  flex-direction: row-reverse;
+  justify-self: space-around;
 }
 </style>

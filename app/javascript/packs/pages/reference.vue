@@ -1,31 +1,39 @@
 <template>
-  <div class="footer">
-    <h1>{{ msg }}</h1>
-    <div class="message">
-      <h3>app/javascript/packs/assetsのロゴ</h3>
-      <!-- <img class="img" src="../assets/logo.png" /> -->
-      <br />これはページ2です。
-      <br />
-      <h3>app/assets/images/のねこ</h3>
-      <div class="cat_image" />
-      <br />この中にスタイルをまとめて書いてね
-      <br />
+  <div>
+    <div class="content">
+      <img src="https://placehold.jp/160x80.png" alt="画像" />
+      <h3 class="article-title">{{ article.image }}</h3>
+      <h3 class="article-title">{{ article[0].title }}</h3>
+      <p class="article-content">{{ article[0].content }}</p>
     </div>
-    <router-link to="/">前のページへ</router-link>
+    <router-link class="routerLink" :to="{ name: 'Top' }">記事一覧へ</router-link>
   </div>
 </template>
 
 <script>
+import Vue from "vue/dist/vue.esm";
+import axios from "axios";
+
 export default {
-  name: "global_footer",
-  props: {
-    msg: "ページ1"
+  data: function() {
+    return {
+      article: []
+    };
+  },
+  mounted() {
+    axios.get(`/api/v1/board/${this.$route.params.id}`).then(res => {
+      console.log(res.data), (this.article = res.data);
+    });
   }
 };
 </script>
 
 <style scoped lang="scss">
-.message {
+.routerLink {
+  text-decoration: none;
+}
+
+.content {
   margin: 0.2em;
   margin: 1em;
   padding: 1em;

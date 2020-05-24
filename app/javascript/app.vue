@@ -1,10 +1,8 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <Header class="header"></Header>
     <div class="whole">
-      <div class="side-bar">
-        <LeftSidebar></LeftSidebar>
-      </div>
+      <LeftSidebar class="left-side-bar"></LeftSidebar>
       <div class="router-part">
         <router-view />
       </div>
@@ -27,7 +25,7 @@ export default {
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif, "Ricty Diminished";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -39,7 +37,12 @@ export default {
   justify-content: center;
 }
 
-.side-bar {
+/* .header {
+  position: fixed;
+  width: 1080px;
+} */
+
+.left-side-bar {
   /* width: 16%; */
   position: absolute;
   left: 20px;
@@ -47,6 +50,6 @@ export default {
 
 .router-part {
   /* flex-basis: 65%; */
-  width: 65%;
+  width: 55%;
 }
 </style>

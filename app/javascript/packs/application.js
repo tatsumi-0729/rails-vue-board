@@ -7,24 +7,24 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/pages/layouts/application.html.erb
 
-console.log('Hello World from Webpacker')
+console.log("Hello World from Webpacker");
 
 // import "@babel/polyfill";
-import Vue from 'vue/dist/vue.esm';
-import App from '../app.vue';
-import Router from './router.js';
+import Vue from "vue/dist/vue.esm";
+import App from "../app.vue";
+import Router from "./router.js";
 import axios from "axios";
 
 new Vue({
-  el: '#app',
+  el: "#app",
   router: Router,
   axios,
-  render: h => h(App)
-})
+  render: (h) => h(App),
+});
 
 export default {
   name: "global_footer",
   props: {
-    msg: "記事詳細"
+    msg: "記事詳細",
   },
 };

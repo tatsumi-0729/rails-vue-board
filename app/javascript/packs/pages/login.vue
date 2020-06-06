@@ -1,7 +1,8 @@
 <template>
   <div class="whole">
     <div class="loginInfo">
-      <h1 class="title">ログイン画面</h1>ユーザ名
+      <h1 class="title">ログイン</h1>
+      <p v-show="loginMiss" class="login_miss">入力情報を確認して下さい。</p>ユーザ名
       <input v-model="userName" />
       <br />パスワード
       <input v-model="password" />
@@ -31,13 +32,16 @@ export default {
   data: function() {
     return {
       userName: "ユーザ名",
-      password: "パスワード"
+      password: "パスワード",
+      loginMiss: false,
+      logout: false,
+      login: false
     };
   },
   methods: {
     clickButton: function() {
       axios
-        .post("/api/v1/session", {
+        .post("/api/v1/user", {
           session: {
             user_name: this.userName,
             password: this.password
@@ -46,7 +50,10 @@ export default {
         .then(
           res => {
             console.log(res.data);
-            // this.$router.push({ path: "/" });
+            if (res.data != "ログインできませんでした") {
+              this.$router.push({ path: "/" });
+            }
+            this.loginMiss = true;
           },
           error => {
             console.log(error);
@@ -77,6 +84,13 @@ export default {
   justify-content: center; /* 子要素をflexboxにより中央に配置する */
   width: 60px;
   height: 30px;
+}
+
+.login_miss {
+  color: white;
+  background-color: pink;
+  border-radius: 5%;
+  padding: 10px 20px 10px 20px;
 }
 
 .backToTop {

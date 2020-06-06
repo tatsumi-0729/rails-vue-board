@@ -33,8 +33,8 @@ export default {
   methods: {
     clickButton: function() {
       axios
-        .post("/api/v1/session/new", {
-          session: {
+        .post("/api/v1/user/new", {
+          user: {
             user_name: this.userName,
             password: this.password
           }
@@ -42,7 +42,7 @@ export default {
         .then(
           res => {
             console.log(res.data);
-            // this.$router.push({ path: "/" });
+            this.$router.push({ path: "/" });
           },
           error => {
             console.log(error);

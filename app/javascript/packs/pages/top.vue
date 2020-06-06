@@ -23,7 +23,6 @@
         </div>
       </div>
     </div>
-    <router-link class="routerLink" :to="{ name: 'Login'}">login</router-link>
   </div>
 </template>
 

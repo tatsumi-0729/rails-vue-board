@@ -10,8 +10,10 @@ Rails.application.routes.draw do
 
   namespace :api, {format: 'json'} do
     namespace :v1 do
-      resources :session, only: [:index, :create]
-      post 'session/new', to: 'session#new'
+      resources :user, only: [:index, :create]
+      post 'user/new', to: 'user#new'
+      post 'user/delete', to: 'user#destroy'
+      get 'user/invest', to: 'user#invest'
     end
   end
 

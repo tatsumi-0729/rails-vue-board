@@ -6,26 +6,28 @@ class Api::V1::BoardController < ApplicationController
   end
 
   def show
-    @Article = Article.where(id: params[:id])
-    # eyecatch = @Article.parse_base64 = (:image) #eyecatchは添付した画像ファイル
+    article = Article.find(params[:id])
+    eyecatch = article.avatar #avatarは添付した画像ファイル
     # if eyecatch.present?
-    #   @Article['image'] = encode_base64(eyecatch) # 画像ファイルを1.で定義したメソッドでBase64エンコードし、renderするデータに追加する
+    article[:image] = encode_base64(eyecatch) # 画像ファイルを1.で定義したメソッドでBase64エンコードし、renderするデータに追加する
+    render json: article
     # end
-    render "index", json: @Article
   end
 
   def create
-    if create_params[:image].present?
-      @Article = Article.create(create_params)
-      if @Article.save
-        @Article.parse_base64 = create_params[:image]
-        render "index", json: @Article, status: :created
-      else
-        render json: @Article.errors, status: :unprocessable_entity
-      end
-    else 
+    if session[:user_id] == nil
+      render json: 'user false'
+      return
+    end
+
+    @Article = Article.create(create_params)
+    if @Article.save
+      @Article.parse_base64 = create_params[:image]
+      render "index", json: @Article, status: :created
+    else
       render json: @Article.errors, status: :unprocessable_entity
     end
+
   end
 
   def destroy
@@ -41,7 +43,7 @@ class Api::V1::BoardController < ApplicationController
   # 各モデルのレコードに添付された画像ファイルをBase64でエンコードする
   def encode_base64(eyecatch)
     image = Base64.encode64(eyecatch.download) # 画像ファイルをActive Storageでダウンロードし、エンコードする
-    blob = ActiveStorage::Blob.find(image[:id]) # Blobを作成
+    blob = ActiveStorage::Blob.find(eyecatch[:id]) # Blobを作成
     "data:#{blob[:content_type]};base64,#{image}" # Vue側でそのまま画像として読み込み出来るBase64文字列にして返す
   end
 

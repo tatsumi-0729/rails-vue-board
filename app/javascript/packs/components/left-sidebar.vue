@@ -3,7 +3,7 @@
     <div>
       <button class="button">
         <router-link class="routerLink" :to="{ name: 'NewArticle' }">
-          <p class="newArticleText">新規記事投稿</p>
+          <p v-show="showNewArticleButton" class="newArticleText">新規記事投稿</p>
         </router-link>
       </button>
     </div>
@@ -50,7 +50,21 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import Vue from "vue/dist/vue.esm";
+import axios from "axios";
+
+export default {
+  data: function() {
+    return {
+      showNewArticleButton: false
+    };
+  },
+  mounted: function() {
+    this.showNewArticleButton = true;
+  }
+};
+</script>
 
 <style scoped>
 .whole {

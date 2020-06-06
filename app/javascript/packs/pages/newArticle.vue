@@ -1,7 +1,8 @@
 <template>
   <div class="whole">
     <div class="newArticleInfo">
-      <h1 class="title">新規記事投稿</h1>題名：
+      <h1 class="title">新規記事投稿</h1>
+      <p v-show="userPresent" class="user_present">ログインして下さい。</p>題名：
       <input v-model="title" />
       <br />本文：
       <textarea v-model="content" />
@@ -32,7 +33,8 @@ export default {
       title: "タイトル",
       content: "内容",
       userId: "",
-      image: ""
+      image: "",
+      userPresent: false
     };
   },
   methods: {
@@ -58,7 +60,11 @@ export default {
         })
         .then(
           res => {
-            this.$router.push({ path: "/" });
+            console.log(res.data);
+            if (res.data != "user false") {
+              this.$router.push({ path: "/" });
+            }
+            this.userPresent = true;
           },
           error => {
             console.log(error);
@@ -89,6 +95,13 @@ export default {
   justify-content: center; /* 子要素をflexboxにより中央に配置する */
   width: 60px;
   height: 30px;
+}
+
+.user_present {
+  color: white;
+  background-color: pink;
+  border-radius: 5%;
+  padding: 10px 20px 10px 20px;
 }
 
 .backToTop {

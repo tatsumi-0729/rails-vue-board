@@ -35,12 +35,8 @@ export default {
 .whole {
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
 }
-
-/* .header {
-  position: fixed;
-  width: 1080px;
-} */
 
 .left-side-bar {
   /* width: 16%; */

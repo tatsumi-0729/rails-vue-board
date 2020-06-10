@@ -1,4 +1,5 @@
 <template>
+<body>
   <div id="app">
     <Header class="header"></Header>
     <div class="whole">
@@ -8,6 +9,7 @@
       </div>
     </div>
   </div>
+</body>
 </template>
 
 <script>

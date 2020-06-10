@@ -2,6 +2,10 @@ class Api::V1::BoardController < ApplicationController
 
   def index
     @Articles = Article.all
+    @Articles.each do |article|
+      eyecatch = article.avatar
+      article.image = encode_base64(eyecatch)
+    end
     render json: @Articles
   end
 
@@ -9,7 +13,7 @@ class Api::V1::BoardController < ApplicationController
     article = Article.find(params[:id])
     eyecatch = article.avatar #avatarは添付した画像ファイル
     # if eyecatch.present?
-    article[:image] = encode_base64(eyecatch) # 画像ファイルを1.で定義したメソッドでBase64エンコードし、renderするデータに追加する
+    article.image = encode_base64(eyecatch)# 画像ファイルを1.で定義したメソッドでBase64エンコードし、renderするデータに追加する
     render json: article
     # end
   end
@@ -21,6 +25,7 @@ class Api::V1::BoardController < ApplicationController
     end
 
     @Article = Article.create(create_params)
+    @Article.user_id = session[:user_id]
     if @Article.save
       @Article.parse_base64 = create_params[:image]
       render "index", json: @Article, status: :created

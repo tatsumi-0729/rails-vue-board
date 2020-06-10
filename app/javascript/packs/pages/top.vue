@@ -3,8 +3,7 @@
     <div class="article" v-for="article in articles" :key="article.id">
       <div class="thumbnail">
         <div class="space-between">
-          <img src="https://placehold.jp/160x80.png" alt="画像" />
-          <!-- <p class="article-title">{{ article.image}}</p> -->
+          <img class="image" :src="article.image" alt="画像" />
           <div class="caption">
             <!-- valueに注意 -->
             <input type="hidden" id="articleId" :value="article.id" />
@@ -84,6 +83,12 @@ export default {
 .article .space-between {
   display: flex;
   align-content: space-between;
+}
+
+.article .image {
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
 }
 
 .article .article-title {

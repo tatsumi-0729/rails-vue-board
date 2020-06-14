@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   namespace :api, {format: 'json'} do
     namespace :v1 do
       resources :board, only: [:index, :show, :create, :destroy]
+      post 'board/find', to: 'board#find'
     end
   end
 

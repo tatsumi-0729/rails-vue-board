@@ -9,10 +9,12 @@
 
       <!-- 検索ボックス -->
       <div class="both">
-        <form action="Top" method="post">
-          <input name="main_search" type="text" class="text_area" placeholder />
-          <button type="submit" class="btn btn-primary" id="search_button" value="検索">検索</button>
-        </form>
+        <input v-model="word" type="text" class="text_area" placeholder />
+        <router-link :to="{ name: 'Search'}">
+          <button type="submit" v-on:click="searchButton" id="search_button" value="検索">検索</button>
+          <Search v-if="articlesOnFlag" v-bind:propArticles="propArticles"></Search>
+          <!-- <Search v-if="nullDataOnFlag" v-bind:nullData="nullData"></Search> -->
+        </router-link>
       </div>
 
       <div class="nav-bar">
@@ -33,13 +35,21 @@
 <script>
 import Vue from "vue/dist/vue.esm";
 import axios from "axios";
+import Search from "../pages/search.vue";
 
 export default {
+  components: {
+    Search
+  },
   data: function() {
     return {
       logout: false,
-      login: false
-      // completeLogout: false
+      login: false,
+      word: "",
+      propArticles: [],
+      nullData: "",
+      articlesOnFlag: false,
+      nullDataOnFlag: false
     };
   },
   methods: {
@@ -55,13 +65,33 @@ export default {
         }
       });
     },
+    searchButton: function() {
+      axios
+        .post("/api/v1/board/find", {
+          title: this.word
+        })
+        .then(
+          res => {
+            if (res.data != []) {
+              this.articlesOnFlag = true;
+              this.propArticles = res.data;
+              // console.log(this.propArticles);
+            } else {
+              this.nullDataOnFlag = true;
+              this.nullData = "該当記事がありません。";
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+    },
     sessionDelete: function() {
       axios.post("/api/v1/user/delete").then(res => {
         console.log(res.data);
         if (res.data == "success") {
           this.logout = false;
           this.login = true;
-          // this.completeLogout = true;
         }
       });
     }

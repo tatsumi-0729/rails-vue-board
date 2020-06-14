@@ -1,6 +1,7 @@
 <template>
   <div class="body">
-    <div class="article" v-for="article in articles" :key="article.id">
+    <!-- <div>{{ nullData }}</div> -->
+    <div class="article" v-for="article in propArticles" :key="article.id">
       <div class="thumbnail">
         <div class="space-between">
           <img class="image" :src="article.image" alt="画像" />
@@ -36,15 +37,15 @@ export default {
       articleId: ""
     };
   },
-  // props: ["articles"],
+  props: {
+    propArticles: Array
+  },
   methods: {
-    fetchArticles() {
-      axios.get(`/api/v1/board`).then(res => {
-        for (var i = 0; i < res.data.length; i++) {
-          this.articles.push(res.data[i]);
-        }
-      });
-    },
+    // fetchArticles() {
+    //   for (var i = 0; i < this.propArticles.length; i++) {
+    //     this.articles.push(this.propArticles[i]);
+    //   }
+    // },
     deleteButton: function() {
       // articleIdはここで入れないとscriptの性質上、undifinedになる。
       this.articleId = document.getElementById("articleId").value;
@@ -55,10 +56,10 @@ export default {
         console.log("削除完了");
       });
     }
-  },
-  mounted: function() {
-    this.fetchArticles();
   }
+  // mounted: function() {
+  //   this.fetchArticles();
+  // }
 };
 </script>
 
@@ -70,6 +71,7 @@ export default {
 .body {
   font-size: 50%;
   font-family: Verdana, "ＭＳ Ｐゴシック", sans-serif;
+  width: 150%;
 }
 
 .article {

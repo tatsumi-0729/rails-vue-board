@@ -1,5 +1,6 @@
 class Api::V1::BoardController < ApplicationController
 
+  # 一覧表示
   def index
     @Articles = Article.all
     @Articles.each do |article|
@@ -9,6 +10,7 @@ class Api::V1::BoardController < ApplicationController
     render json: @Articles
   end
 
+  # 詳細画面
   def show
     article = Article.find(params[:id])
     eyecatch = article.avatar #avatarは添付した画像ファイル
@@ -18,6 +20,22 @@ class Api::V1::BoardController < ApplicationController
     # end
   end
 
+   # 記事検索
+   def find
+    @articles = Article.where(['title like ?',"%#{search_param}%"])
+    if @articles == []
+      render json: []
+      return
+    end
+    @articles.each do |article|
+      eyecatch = article.avatar #avatarは添付した画像ファイル
+      # if eyecatch.present?
+      article.image = encode_base64(eyecatch)# 画像ファイルを1.で定義したメソッドでBase64エンコードし、renderするデータに追加する
+    end
+    render json: @articles
+   end
+
+   # 新規投稿
   def create
     if session[:user_id] == nil
       render json: 'user false'
@@ -35,6 +53,7 @@ class Api::V1::BoardController < ApplicationController
 
   end
 
+   # 記事削除
   def destroy
     @Article = Article.find(params[:id])
     if @Article.destroy
@@ -55,6 +74,10 @@ class Api::V1::BoardController < ApplicationController
   private
   def create_params
     params.require(:article).permit(:title, :content, :user_id, :image)
+  end
+
+  def search_param
+    params.require(:title)
   end
 
 end

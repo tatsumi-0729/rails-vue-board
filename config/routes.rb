@@ -4,8 +4,9 @@ Rails.application.routes.draw do
 
   namespace :api, {format: 'json'} do
     namespace :v1 do
-      resources :board, only: [:index, :show, :create, :destroy]
       post 'board/find', to: 'board#find'
+      get 'board/ranking', to: 'board#ranking'
+      resources :board, only: [:index, :show, :create, :destroy]
     end
   end
 
@@ -15,6 +16,12 @@ Rails.application.routes.draw do
       post 'user/new', to: 'user#new'
       post 'user/delete', to: 'user#destroy'
       get 'user/invest', to: 'user#invest'
+    end
+  end
+
+  namespace :api, {format: 'json'} do
+    namespace :v1 do
+      resources :comment, only: [:create, :show]
     end
   end
 

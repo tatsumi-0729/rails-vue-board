@@ -13,11 +13,22 @@ class Api::V1::BoardController < ApplicationController
   # 詳細画面
   def show
     article = Article.find(params[:id])
+    article.increment!(:count)
     eyecatch = article.avatar #avatarは添付した画像ファイル
     # if eyecatch.present?
     article.image = encode_base64(eyecatch)# 画像ファイルを1.で定義したメソッドでBase64エンコードし、renderするデータに追加する
     render json: article
     # end
+  end
+
+  # top ranking
+  def ranking
+    @articles = Article.order(count: :DESC).limit(10)
+    if @articles.present?
+      render json: @articles
+    else
+      render json: "SQL ERROR"
+    end
   end
 
    # 記事検索

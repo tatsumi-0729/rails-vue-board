@@ -13,36 +13,14 @@
       <div class="side-var">
         <nav class="global-nav">
           <ul class="side-nav">
-            <li id="nav">
-              <a href>demo1</a>
-            </li>
-            <li id="nav">
-              <a href>demo2</a>
-            </li>
-            <li id="nav">
-              <a href>demo3</a>
-            </li>
-            <li id="nav">
-              <a href>demo4</a>
-            </li>
-            <li id="nav">
-              <a href>demo5</a>
-            </li>
-            <li id="nav">
-              <a href>demo6</a>
-            </li>
-            <li id="nav">
-              <a href>demo7</a>
-            </li>
-            <li id="nav">
-              <a href>demo8</a>
-            </li>
-            <li id="nav">
-              <a href>demo9</a>
-            </li>
-            <li id="nav">
-              <a href>demo10</a>
-            </li>
+            <div class="article" v-for="article in articles" :key="article.id">
+              <li id="nav">
+                <router-link
+                  class="routerLink"
+                  :to="{ name: 'Reference', params: { id: article.id } }"
+                >{{article.title}}</router-link>
+              </li>
+            </div>
           </ul>
         </nav>
       </div>
@@ -57,11 +35,15 @@ import axios from "axios";
 export default {
   data: function() {
     return {
-      showNewArticleButton: false
+      showNewArticleButton: true,
+      articles: []
     };
   },
   mounted: function() {
-    this.showNewArticleButton = true;
+    axios.get(`/api/v1/board/ranking`).then(res => {
+      console.log(res.data);
+      this.articles = res.data;
+    });
   }
 };
 </script>

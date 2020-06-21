@@ -10,11 +10,11 @@
       <!-- 検索ボックス -->
       <div class="both">
         <input v-model="word" type="text" class="text_area" placeholder />
-        <router-link :to="{ name: 'Search'}">
-          <button type="submit" v-on:click="searchButton" id="search_button" value="検索">検索</button>
-          <Search v-if="articlesOnFlag" v-bind:propArticles="propArticles"></Search>
-          <!-- <Search v-if="nullDataOnFlag" v-bind:nullData="nullData"></Search> -->
-        </router-link>
+        <!-- <router-link :to="{ name: 'Top'}"> -->
+        <button type="submit" v-on:click="searchButton" id="search_button" value="検索">検索</button>
+        <Top v-if="articlesOnFlag" v-bind:propArticles="propArticles"></Top>
+        <Top v-if="nullDataOnFlag" v-bind:nullData="nullData"></Top>
+        <!-- </router-link> -->
       </div>
 
       <div class="nav-bar">
@@ -35,11 +35,11 @@
 <script>
 import Vue from "vue/dist/vue.esm";
 import axios from "axios";
-import Search from "../pages/search.vue";
+import Top from "../pages/top.vue";
 
 export default {
   components: {
-    Search
+    Top
   },
   data: function() {
     return {

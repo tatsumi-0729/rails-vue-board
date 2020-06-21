@@ -36,12 +36,22 @@ export default {
       articleId: ""
     };
   },
-  // props: ["articles"],
+  props: {
+    propArticles: Array
+  },
   methods: {
     fetchArticles() {
       axios.get(`/api/v1/board`).then(res => {
-        for (var i = 0; i < res.data.length; i++) {
-          this.articles.push(res.data[i]);
+        if (this.propArticles != undefined) {
+          console.log(this.articles);
+          this.articles.length = 0;
+          for (var i = 0; i < this.propArticles.length; i++) {
+            this.articles.push(this.propArticles[i]);
+          }
+        } else {
+          for (var i = 0; i < res.data.length; i++) {
+            this.articles.push(res.data[i]);
+          }
         }
       });
     },

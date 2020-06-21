@@ -56,10 +56,10 @@ export default {
         console.log("削除完了");
       });
     }
+  },
+  mounted: function() {
+    this.fetchArticles();
   }
-  // mounted: function() {
-  //   this.fetchArticles();
-  // }
 };
 </script>
 

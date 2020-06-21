@@ -9,7 +9,6 @@
       <br />画像：
       <input name="uploadedImage" type="file" ref="file" v-on:change="onFileChange()" />
       <br />
-      <input type="hidden" id="userId" value="1" />
       <button v-on:click="clickButton" class="submit">投稿</button>
       <div class="backToTop">
         <router-link class="routerLink" :to="{ name: 'Top' }">記事一覧へ</router-link>
@@ -32,7 +31,6 @@ export default {
     return {
       title: "タイトル",
       content: "内容",
-      userId: "",
       image: "",
       userPresent: false
     };
@@ -48,13 +46,12 @@ export default {
       reader.readAsDataURL(file);
     },
     clickButton: function() {
-      this.userId = document.getElementById("userId").value;
+      // this.userId = document.getElementById("userId").value;
       axios
         .post("/api/v1/board", {
           article: {
             title: this.title,
             content: this.content,
-            userId: this.userId,
             image: this.image
           }
         })

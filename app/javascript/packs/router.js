@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: "/", name: "Top", component: Top },
-  { path: "/search", name: "Search", component: Search },
+  // { path: "/search", name: "Search", component: Search },
   { path: "/reference/:id(\\d+)", name: "Reference", component: Reference },
   { path: "/newArticle", name: "NewArticle", component: NewArticle },
   { path: "/login", name: "Login", component: Login },

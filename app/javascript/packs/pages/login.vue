@@ -80,8 +80,8 @@ export default {
 }
 
 .login {
-  display: flex; /* 子要素をflexboxで揃える */
-  justify-content: center; /* 子要素をflexboxにより中央に配置する */
+  display: flex;
+  justify-content: center;
   width: 60px;
   height: 30px;
 }

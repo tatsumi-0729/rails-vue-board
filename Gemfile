@@ -9,7 +9,7 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 gem 'sqlite3'
 gem 'omniauth-google-oauth2'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 
 gem 'image_processing', '~> 1.2'
 
